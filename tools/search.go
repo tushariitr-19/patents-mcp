@@ -26,7 +26,10 @@ var SearchPatentsTool = &mcp.Tool{
 func SearchPatentsHandler() func(context.Context, *mcp.CallToolRequest, SearchPatentsInput) (*mcp.CallToolResult, any, error) {
 	client, err := bq.NewClient(context.Background(), os.Getenv("GCP_PROJECT_ID"))
 	if err != nil {
-		logger.Log.Fatal("search_patents: failed to create BigQuery client", zap.Error(err))
+		logger.Log.Error("search_patents: failed to create BigQuery client", zap.Error(err))
+		return func(ctx context.Context, req *mcp.CallToolRequest, input SearchPatentsInput) (*mcp.CallToolResult, any, error) {
+			return nil, nil, fmt.Errorf("BigQuery client not initialized: %w", err)
+		}
 	}
 
 	return func(ctx context.Context, req *mcp.CallToolRequest, input SearchPatentsInput) (*mcp.CallToolResult, any, error) {

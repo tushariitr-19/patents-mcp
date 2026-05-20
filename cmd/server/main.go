@@ -20,10 +20,6 @@ func main() {
 	}
 	defer logger.Sync()
 
-	if os.Getenv("GCP_PROJECT_ID") == "" {
-		logger.Log.Fatal("GCP_PROJECT_ID environment variable is required")
-	}
-
 	ctx, cancel := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer cancel()
 

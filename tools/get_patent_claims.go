@@ -25,7 +25,10 @@ var GetPatentClaimsTool = &mcp.Tool{
 func GetPatentClaimsHandler() func(context.Context, *mcp.CallToolRequest, GetPatentClaimsInput) (*mcp.CallToolResult, any, error) {
 	client, err := bq.NewClient(context.Background(), os.Getenv("GCP_PROJECT_ID"))
 	if err != nil {
-		logger.Log.Fatal("get_patent_claims: failed to create BigQuery client", zap.Error(err))
+		logger.Log.Error("get_patent: failed to create BigQuery client", zap.Error(err))
+		return func(ctx context.Context, req *mcp.CallToolRequest, input GetPatentClaimsInput) (*mcp.CallToolResult, any, error) {
+			return nil, nil, fmt.Errorf("BigQuery client not initialized: %w", err)
+		}
 	}
 
 	return func(ctx context.Context, req *mcp.CallToolRequest, input GetPatentClaimsInput) (*mcp.CallToolResult, any, error) {

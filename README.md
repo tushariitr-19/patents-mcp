@@ -1,5 +1,7 @@
 # patents-mcp
 
+[![tushariitr-19/patents-mcp MCP server](https://glama.ai/mcp/servers/tushariitr-19/patents-mcp/badges/score.svg)](https://glama.ai/mcp/servers/tushariitr-19/patents-mcp)
+
 An MCP (Model Context Protocol) server for patent search and prior art discovery, powered by the Google Patents public dataset on BigQuery.
 
 Built with the official [Go MCP SDK](https://github.com/modelcontextprotocol/go-sdk).

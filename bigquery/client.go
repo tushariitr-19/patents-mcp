@@ -3,6 +3,7 @@ package bigquery
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"cloud.google.com/go/bigquery"
 	"github.com/tushariitr-19/patents-mcp/logger"
@@ -207,4 +208,59 @@ func (c *Client) GetPatent(ctx context.Context, publicationNumber string) (*mode
 		CPCCodes:   cpcCodes,
 		Citations:  citations,
 	}, nil
+}
+
+func (c *Client) GetPatentClaims(ctx context.Context, publicationNumber string) ([]string, error) {
+	logger.Log.Info("fetching patent claims", zap.String("publication_number", publicationNumber))
+
+	sql := `
+		SELECT
+			c.text
+		FROM
+			patents-public-data.patentsview.claim AS c
+		JOIN
+			patents-public-data.patentsview.patent AS p
+		ON
+			c.patent_id = p.id
+		WHERE
+			p.number = @patent_number
+		ORDER BY
+			c.sequence
+	`
+
+	// Extract patent number from publication number e.g. US-7650331-B1 -> 7650331
+	parts := strings.Split(publicationNumber, "-")
+	if len(parts) < 2 {
+		return nil, fmt.Errorf("invalid publication number format: %s", publicationNumber)
+	}
+	patentNumber := parts[1]
+
+	q := c.bq.Query(sql)
+	q.Parameters = []bigquery.QueryParameter{
+		{Name: "patent_number", Value: patentNumber},
+	}
+
+	it, err := q.Read(ctx)
+	if err != nil {
+		logger.Log.Error("BigQuery query failed", zap.Error(err))
+		return nil, fmt.Errorf("query failed: %w", err)
+	}
+
+	var claims []string
+	for {
+		var row struct {
+			Text string `bigquery:"text"`
+		}
+		err := it.Next(&row)
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			return nil, err
+		}
+		claims = append(claims, row.Text)
+	}
+
+	logger.Log.Info("claims fetched", zap.Int("count", len(claims)))
+	return claims, nil
 }

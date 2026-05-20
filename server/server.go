@@ -24,6 +24,7 @@ func New() *Server {
 
 	mcp.AddTool(s, tools.SearchPatentsTool, tools.SearchPatentsHandler())
 	mcp.AddTool(s, tools.GetPatentTool, tools.GetPatentHandler())
+	mcp.AddTool(s, tools.GetPatentClaimsTool, tools.GetPatentClaimsHandler())
 
 	logger.Log.Info("registered tools", zap.String("version", version))
 	return &Server{mcp: s}

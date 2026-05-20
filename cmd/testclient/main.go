@@ -48,4 +48,17 @@ func main() {
 	for _, c := range res.Content {
 		log.Print(c.(*mcp.TextContent).Text)
 	}
+
+	// Test get_patent
+	res2, err := session.CallTool(ctx, &mcp.CallToolParams{
+		Name:      "get_patent",
+		Arguments: map[string]any{"publication_number": "US-2024382124-A1"},
+	})
+	if err != nil {
+		log.Fatalf("get_patent failed: %v", err)
+	}
+
+	for _, c := range res2.Content {
+		log.Print(c.(*mcp.TextContent).Text)
+	}
 }

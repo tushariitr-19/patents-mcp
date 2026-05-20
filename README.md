@@ -18,7 +18,7 @@ Existing patent MCP servers are either paid, single-source, or unmaintained. `pa
 | Tool | Description |
 |------|-------------|
 | `search_patents` | Search patents by keyword, technology area, or inventor name |
-| `get_patent` | Fetch full patent details by publication number *(coming soon)* |
+| `get_patent` | Fetch full patent details by publication number |
 | `get_patent_claims` | Fetch patent claims text *(coming soon)* |
 
 ## Prerequisites

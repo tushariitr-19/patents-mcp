@@ -11,4 +11,6 @@ type Patent struct {
 	Country    string   `json:"country"`
 	URL        string   `json:"url"`
 	Claims     []string `json:"claims,omitempty"`
+	CPCCodes   []string `json:"cpc_codes,omitempty"`
+	Citations  []string `json:"citations,omitempty"`
 }

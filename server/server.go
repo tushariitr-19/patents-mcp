@@ -23,6 +23,7 @@ func New() *Server {
 	}, nil)
 
 	mcp.AddTool(s, tools.SearchPatentsTool, tools.SearchPatentsHandler())
+	mcp.AddTool(s, tools.GetPatentTool, tools.GetPatentHandler())
 
 	logger.Log.Info("registered tools", zap.String("version", version))
 	return &Server{mcp: s}

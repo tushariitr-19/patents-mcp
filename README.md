@@ -76,6 +76,11 @@ Add to your Claude Desktop config (`claude_desktop_config.json`):
 }
 ```
 
+## Screenshots
+
+### Available Tools
+![Available Tools](docs/screenshots/list_of_tools.png)
+
 ## Example Prompts
 
 Once connected to Claude Desktop:

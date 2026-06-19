@@ -1,5 +1,7 @@
 # patents-mcp
 
+[![Go Version](https://img.shields.io/badge/Go-1.25+-00ADD8?style=flat&logo=go)](https://golang.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![tushariitr-19/patents-mcp MCP server](https://glama.ai/mcp/servers/tushariitr-19/patents-mcp/badges/score.svg)](https://glama.ai/mcp/servers/tushariitr-19/patents-mcp)
 
 An MCP (Model Context Protocol) server for patent search and prior art discovery, powered by the Google Patents public dataset on BigQuery.
